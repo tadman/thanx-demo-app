@@ -11,7 +11,7 @@ class Account < ApplicationRecord
     unless: :number?
 
   def self.generate_number
-    '%04d-%06d' % [
+    "%04d-%06d" % [
       SecureRandom.random_number(10000),
       SecureRandom.random_number(1000000)
     ]
@@ -29,6 +29,17 @@ class Account < ApplicationRecord
 
   def redeem_reward!(reward)
     AccountTransaction.atomic_redeem!(self, reward)
+  end
+
+  def as_json(*_options)
+    {
+      id:,
+      number:,
+      points:,
+      default: user.default_account == self,
+      created_at:,
+      updated_at:
+    }
   end
 
   protected

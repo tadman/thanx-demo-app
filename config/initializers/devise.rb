@@ -21,7 +21,7 @@ Devise.setup do |config|
   config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
 
   config.lock_strategy = :failed_attempts
-  config.unlock_keys = [:email]
+  config.unlock_keys = [ :email ]
   config.unlock_strategy = :both
   config.maximum_attempts = 20
   config.unlock_in = 1.hour

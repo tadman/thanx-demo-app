@@ -11,4 +11,18 @@ class User < ApplicationRecord
   )
 
   has_many :accounts
+
+  def default_account
+    accounts.first
+  end
+
+  def as_json(*_options)
+    # Restricted view into user record
+    {
+      id:,
+      email:,
+      created_at:,
+      updated_at:
+    }
+  end
 end

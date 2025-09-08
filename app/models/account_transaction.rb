@@ -10,8 +10,6 @@ class AccountTransaction < ApplicationRecord
   # Attempts points redemption to claim a reward. Returns true on succes, or
   # raises InsufficientPoints if the points balance is insufficient.
   def self.atomic_redeem!(account, reward)
-    result = nil
-
     # Performed as an atomic insertion where this query either succeeds and
     # creates the row, or fails to insert at all. This prevents over-spending,
     # from the introduction of race conditions.
@@ -20,7 +18,7 @@ class AccountTransaction < ApplicationRecord
         SELECT $1, $2, -$3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
         WHERE (
           COALESCE((SELECT SUM(points) FROM account_transactions WHERE account_id = $1), 0)
-          + $3
+          - $3
         ) >= 0
         RETURNING id
     SQL

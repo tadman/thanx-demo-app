@@ -5,6 +5,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 export default tseslint.config(
   {
     ignores: [
+      "**/*.min.js",
       "node_modules/**",
       "vendor/**",
       "tmp/**",

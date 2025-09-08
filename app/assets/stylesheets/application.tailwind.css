@@ -3,23 +3,37 @@
 @layer components {
   :root {
     --theme-color: #171717;
-    --bg-color: #43d8d6;
+    --bg-color: var(--color-amber-600);
   }
 
   body {
-      background: linear-gradient(to bottom, #F7F7F8 50%, var(--bg-color) 100%) no-repeat fixed;
+    @apply font-sans;
+
+    background: linear-gradient(to bottom, #F7F7F8 50%, var(--bg-color) 100%) no-repeat fixed;
   }
 
   a {
-    @apply text-sky-800;
+    @apply text-sky-800 no-underline;
+  }
+
+  .page-header {
+    @apply h-16 py-2 px-4 bg-(--bg-color);
+  }
+
+  .page-header a {
+    @apply py-3 no-underline text-white;
   }
 
   .center-section {
-    @apply w-96 m-auto;
+    @apply md:m-auto w-96;
   }
 
   h2 {
     @apply text-2xl font-bold;
+  }
+
+  h3 {
+    @apply text-xl font-bold;
   }
 
   form .field {
@@ -39,6 +53,14 @@
   }
 
   form input[type="submit"] {
-    @apply text-white p-2 rounded-md bg-sky-500 w-96 mx-8;
+    @apply text-lg text-white p-2 rounded-md bg-orange-500 w-96 inline-block text-center mx-8;
+  }
+
+  .btn {
+    @apply text-lg text-white p-2 rounded-md bg-orange-500 w-96 inline-block text-center;
+  }
+
+  .btn-redeem {
+    @apply outline-2 outline-offset-2 hover:outline-orange-400 hover:border-orange-500;
   }
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -17,14 +18,24 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%# Use compiled CSS from app/assets/builds to avoid serving raw @import %>
+    <%= stylesheet_link_tag "application", media: "all" %>
+    <%= javascript_include_tag "application", type: "module" %>
   </head>
 
   <body>
-    <div class="header h-12 p-2 bg-sky-500">
-      <h1 class="text-white text-2xl font-bold"><%= link_to("Thanx Demo App", root_path, class: "text-white") %></h1>
+    <div class="flex page-header">
+      <div class="grow">
+        <h1 class="text-white text-2xl font-bold"><%= link_to("Thanx Demo App", root_path) %></h1>
+      </div>
+
+      <div class="flex links">
+        <% if user_signed_in? %>
+          <%= link_to("Log out", destroy_user_session_path, method: :delete) %>
+        <% else %>
+          <%= link_to("Log in", new_user_session_path) %>
+        <% end %>
+      </div>
     </div>
 
     <div class="p-8">

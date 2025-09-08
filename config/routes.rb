@@ -2,16 +2,23 @@
 
 Rails.application.routes.draw do
   devise_for :users,
-    path: '',
+    path: "",
     path_names: {
-      sign_in: 'login',
-      sign_out: 'logout',
-      password: 'password',
-      registration: 'register'
+      sign_in: "login",
+      sign_out: "logout",
+      password: "password",
+      registration: "register"
     }
 
-  get "up" => "rails/health#show",
-    as: :rails_health_check
+  namespace :api do
+    resource :user, only: [ :show ]
+    resources :accounts, only: [ :index, :show ]
+    resources :account_transactions, only: [ :index ]
+    resources :rewards, only: [ :index, :show ]
+  end
 
-  root 'home#index'
+  root "home#index"
+
+  # React catch-all for reloads
+  get "/*path", to: "home#index"
 end
