@@ -1,0 +1,7 @@
+node_modules
+vendor
+tmp
+log
+public
+app/assets/builds
+**/*.min.js

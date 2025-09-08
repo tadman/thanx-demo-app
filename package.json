@@ -1,0 +1,26 @@
+{
+  "name": "app",
+  "private": true,
+  "devDependencies": {
+    "esbuild": "^0.25.9"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
+    "build:css": "npx @tailwindcss/cli -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify",
+    "lint": "eslint app/javascript --max-warnings=0",
+    "lint:fix": "eslint app/javascript --fix",
+    "lint:typeaware": "eslint -c eslint.typeaware.config.mjs app/javascript --max-warnings=0"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.35.0",
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "^8.0.16",
+    "@tailwindcss/cli": "^4.1.13",
+    "eslint": "^9.35.0",
+    "eslint-plugin-file-progress": "^3.0.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.43.0"
+  }
+}

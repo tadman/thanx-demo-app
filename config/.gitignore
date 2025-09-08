@@ -1,0 +1,12 @@
+# These are just est keys. In a production app these would be ignored and
+# kept secret.
+# *.key
+# *.enc
+
+# Always include the locale configuration files
+!locales/*.yml
+
+# Exceptions to make configuring for a demo quicker, though normally
+# these would be customized for each developer and the production
+# environment.
+# *.yml
