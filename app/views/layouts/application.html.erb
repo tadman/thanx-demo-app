@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Thanx" %></title>
+    <title><%= content_for(:title) || "Thanx Demo App" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -23,6 +23,12 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="header h-12 p-2 bg-sky-500">
+      <h1 class="text-white text-2xl font-bold"><%= link_to("Thanx Demo App", root_path, class: "text-white") %></h1>
+    </div>
+
+    <div class="p-8">
+      <%= yield %>
+    </div>
   </body>
 </html>

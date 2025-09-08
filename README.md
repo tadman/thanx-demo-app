@@ -23,9 +23,17 @@ bin/dev
 
 ## Development
 
+### Testing
+
+Use `rspec` to validate functionality:
+
+```shell
+rspec
+```
+
 ### Linting
 
 ```shell
 rubocop
-
+yarn lint
 ```

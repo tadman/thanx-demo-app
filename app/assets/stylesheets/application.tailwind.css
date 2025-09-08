@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+@layer components {
+  :root {
+    --theme-color: #171717;
+    --bg-color: #43d8d6;
+  }
+
+  body {
+      background: linear-gradient(to bottom, #F7F7F8 50%, var(--bg-color) 100%) no-repeat fixed;
+  }
+
+  a {
+    @apply text-sky-800;
+  }
+
+  .center-section {
+    @apply w-96 m-auto;
+  }
+
+  h2 {
+    @apply text-2xl font-bold;
+  }
+
+  form .field {
+    @apply p-8;
+  }
+
+  form .field em {
+    @apply text-sm text-gray-500;
+  }
+
+  form label {
+    @apply font-bold text-gray-500;
+  }
+
+  form input[type="text"], form input[type="email"], form input[type="password"] {
+    @apply border border-gray-200 p-2 rounded-md bg-white w-96;
+  }
+
+  form input[type="submit"] {
+    @apply text-white p-2 rounded-md bg-sky-500 w-96 mx-8;
+  }
+}
