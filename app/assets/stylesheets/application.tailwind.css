@@ -16,6 +16,14 @@
     @apply text-sky-800 no-underline;
   }
 
+  .disclosure {
+    @apply border border-gray-200 p-8 rounded-md bg-white text-gray-500 text-md text-center justify-center;
+  }
+
+  .disclosure-error {
+    @apply border-red-400;
+  }
+
   .page-header {
     @apply h-16 py-2 px-4 bg-(--bg-color);
   }
@@ -58,6 +66,10 @@
 
   .btn {
     @apply text-lg text-white p-2 rounded-md bg-orange-500 w-96 inline-block text-center;
+  }
+
+  .btn-cancel {
+    @apply text-lg text-gray-600 hover:text-gray-50 p-2 rounded-md bg-gray-200 hover:bg-gray-500 w-96 inline-block text-center;
   }
 
   .btn-redeem {

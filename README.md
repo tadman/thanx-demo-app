@@ -3,6 +3,14 @@
 A simple Rails 8 application with a React front-end that provides a small
 proof of concept for a rewards redemption platform.
 
+
+Using the seeded database you should be able to login in using:
+
+* Username: `test@example.com`
+* Password: `example`
+
+Where these are defined in `db/seeds.rb`.
+
 ## Configuration
 
 Begin by adapting the configuration files, though since this is a SQLite3
@@ -22,6 +30,12 @@ bin/dev
 ```
 
 ## Development
+
+To spin up a local database:
+
+```shell
+rails db:migrate db:seed db:test:prepare
+```
 
 ### Testing
 

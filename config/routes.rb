@@ -12,9 +12,12 @@ Rails.application.routes.draw do
 
   namespace :api do
     resource :user, only: [ :show ]
-    resources :accounts, only: [ :index, :show ]
-    resources :account_transactions, only: [ :index ]
-    resources :rewards, only: [ :index, :show ]
+    resources :accounts, only: [ :index, :show ] do |account|
+      resources :account_transactions, only: [ :index ]
+    end
+    resources :rewards, only: [ :index, :show ] do
+      post :redeem, on: :member
+    end
   end
 
   root "home#index"

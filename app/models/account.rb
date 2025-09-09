@@ -4,6 +4,7 @@ class Account < ApplicationRecord
 
   has_many :redeemed_rewards,
     class_name: "Reward",
+    source: :reward,
     through: :account_transactions
 
   before_validation :assign_number,

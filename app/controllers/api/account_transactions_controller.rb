@@ -1,6 +1,7 @@
 class API::AccountTransactionsController < API::BaseController
   def index
-    render json: account.account_transactions
+    # FUTURE: Add pagination to split up resaults
+    render json: account.account_transactions.order_by(created_at: :desc)
   end
 
   protected

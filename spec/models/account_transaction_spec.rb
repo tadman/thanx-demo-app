@@ -50,7 +50,13 @@ describe AccountTransaction do
       account = create(:account, :with_points)
       reward = create(:reward, points: account.points)
 
-      expect { AccountTransaction.atomic_redeem!(account, reward) }.to change { account.points }.by(-reward.points)
+      expect do
+        transaction_id = AccountTransaction.atomic_redeem!(account, reward)
+
+        expect(transaction_id).to be_present
+
+        expect(account.account_transactions.where(id: transaction_id).count).to eq(1)
+      end.to change { account.points }.by(-reward.points)
     end
   end
 end

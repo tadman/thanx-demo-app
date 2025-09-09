@@ -33,6 +33,17 @@ class AccountTransaction < ApplicationRecord
     # could be casually ignored.
     raise InsufficientPoints if rows.empty?
 
-    true
+    rows.dig(0, "id")
+  end
+
+  def as_json(*_options)
+    {
+      id:,
+      account_id:,
+      reward_id:,
+      reward:,
+      points:,
+      created_at:
+    }
   end
 end

@@ -6,6 +6,8 @@ import { Account, AccountTransaction } from "./models";
 import { useParams } from "react-router-dom";
 
 import Loading from "./Loading";
+
+import AccountTransactionsList from "./AccountTransactionsList";
 import RewardCardInline from "./RewardCardInline";
 
 export default function RewardCardProfile() {
@@ -20,6 +22,15 @@ export default function RewardCardProfile() {
       });
   }, [number]);
 
+  useEffect(() => {
+    if (!account) return;
+
+    API.getAccountTransactions(account.id)
+      .then((transactions) => {
+        setTransactions(transactions);
+      });
+  }, [account]);
+
   if (!account) {
     return <Loading />;
   }
@@ -28,5 +39,11 @@ export default function RewardCardProfile() {
     <Link to="/" className="btn">&lt; Back</Link>
 
     <RewardCardInline account={account} />
+
+    <div>
+      <h2>Reward History</h2>
+
+      <AccountTransactionsList transactions={transactions} />
+    </div>
   </div>;
 }

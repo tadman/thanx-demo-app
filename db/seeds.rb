@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# These seeds should be idempotent so running db:seed multiple times does not
+# unnecessarily introduce extra records.
+
 user = User.find_or_create_by!(
   email: "test@example.com"
 ) do |user|
@@ -15,6 +18,30 @@ Account.find_or_create_by!(
   )
 end
 
+user = User.find_or_create_by!(
+  email: "test@example.net"
+) do |user|
+  user.password = "example"
+end
+
+Account.find_or_create_by!(
+  user:,
+  number: "2025-654321"
+) do |account|
+  account.account_transactions.build(
+    points: 10_000
+  )
+end
+
+Account.find_or_create_by!(
+  user:,
+  number: "2025-543210"
+) do |account|
+  account.account_transactions.build(
+    points: 25_000
+  )
+end
+
 [
   {
     title: "Diagnonal Toaster",
@@ -23,7 +50,7 @@ end
     points: 250
   },
   {
-    title: "Frentic Juicer",
+    title: "Frenetic Juicer",
     description: "Juice using advanced hydrocarbon-based thermoplastic. Near silent operation.",
     url: "https://thanx-demo-app.s3.us-east-2.amazonaws.com/ab985938-aa42-43d3-81d8-74fdef7110ee.png",
     points: 500
