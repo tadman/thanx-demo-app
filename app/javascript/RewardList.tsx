@@ -2,8 +2,8 @@ import React from "react";
 
 import RewardPreview from "./RewardPreview";
 
-export default function RewardList({ rewards }) {
+export default function RewardList({ rewards, points }) {
   return <div className="flex flex-wrap gap-4">
-    {rewards.map((reward) => <RewardPreview key={reward.id} reward={reward} />)}
+    {rewards.map((reward) => <RewardPreview key={reward.id} reward={reward} points={points} />)}
   </div>;
 }

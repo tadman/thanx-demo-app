@@ -41,7 +41,6 @@ class AccountTransaction < ApplicationRecord
       id:,
       account_id:,
       reward_id:,
-      reward:,
       points:,
       created_at:
     }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+import { useAppState } from "./AppState";
 import { API } from "./api";
 import { Account, User } from "./models";
 
@@ -11,8 +12,8 @@ import UserProfile from "./UserProfile";
 import Fault from "./Fault";
 
 export default function App() {
-  const [user, setUser] = useState<User | null>(null);
-  const [accounts, setAccounts] = useState<Account[]>([]);
+  const { user, setUser } = useAppState();
+  const { account, setAccount } = useAppState();
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -21,18 +22,16 @@ export default function App() {
         setUser(user);
       })
       .catch((error) => {
-        setUser(null);
         setError(error);
       });
   }, []);
 
   useEffect(() => {
-    API.getAccounts()
-      .then((accounts) => {
-        setAccounts(accounts);
+    API.getAccountDefault()
+      .then((account) => {
+        setAccount(account);
       })
       .catch((error) => {
-        setUser(null);
         setError(error);
       });
   }, []);
@@ -43,7 +42,7 @@ export default function App() {
 
   return <BrowserRouter>
     <Routes>
-      <Route path="/" element={<UserProfile user={user} accounts={accounts} />} />
+      <Route path="/" element={<UserProfile />} />
       <Route path="/cards/:number" element={<RewardCardProfile />} />
       <Route path="/reward/:id" element={<RewardView />} />
     </Routes>

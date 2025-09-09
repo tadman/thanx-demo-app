@@ -87,9 +87,27 @@ end
   },
   {
     title: "Waffle Maker",
-    description: "You can't go wrong with a waffle maker. It's a classic. Diamond waffle version no longer available.",
+    description: "You can't go wrong with a waffle maker. It's a classic. Diamond waffle version is sadly no longer available.",
     url: "https://thanx-demo-app.s3.us-east-2.amazonaws.com/dd9c392e-1227-4741-a43e-62160e9ce195.png",
     points: 350
+  },
+  {
+    title: "Shredotronic",
+    description: "Slice. Dice. Make julienne fries! You can also use this to extrude your own sausages, or vegeterian patties.",
+    url: "https://thanx-demo-app.s3.us-east-2.amazonaws.com/ChatGPT+Image+Sep+8%2C+2025+at+10_44_35+PM.png",
+    points: 1_800
+  },
+  {
+    title: "Interdimensional Portal",
+    description: "While small, this is technically a portal to another dimension and is convenient for discarding kitchen waste.",
+    url: "https://thanx-demo-app.s3.us-east-2.amazonaws.com/ChatGPT+Image+Sep+8%2C+2025+at+10_42_24+PM.png",
+    points: 8_000
+  },
+  {
+    title: "Stunning Osmium Cube",
+    description: "A cube of osmium, the ultimate flex. Can it be used as a kitchen appliance? It's the most dense element on the periodic table, so surely it has some utility.",
+    url: "https://thanx-demo-app.s3.us-east-2.amazonaws.com/ChatGPT+Image+Sep+8%2C+2025+at+10_37_48+PM.png",
+    points: 20_000
   }
 
 ].each do |reward|

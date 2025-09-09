@@ -7,9 +7,17 @@ class API::AccountsController < API::BaseController
     render json: account
   end
 
+  def default
+    render json: user.default_account
+  end
+
+  def not_found
+    render json: { error: { message: "Account not found" } }, status: :not_found
+  end
+
   protected
 
   def account
-    @account ||= Account.find_by(number: params[:id])
+    @account ||= user.accounts.find_by!(number: params[:id])
   end
 end

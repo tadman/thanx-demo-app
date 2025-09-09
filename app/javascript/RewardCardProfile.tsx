@@ -29,7 +29,7 @@ export default function RewardCardProfile() {
       .then((transactions) => {
         setTransactions(transactions);
       });
-  }, [account]);
+    }, [account]);
 
   if (!account) {
     return <Loading />;

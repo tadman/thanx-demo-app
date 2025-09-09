@@ -11,8 +11,8 @@ class Account {
     this.number = data.number as string;
     this.points = data.points as number;
     this.default = data.default as boolean;
-    this.createdAt = data.createdAt as string;
-    this.updatedAt = data.updatedAt as string;
+    this.createdAt = data.created_at as string;
+    this.updatedAt = data.updated_at as string;
   }
 }
 
@@ -21,16 +21,14 @@ class AccountTransaction {
   accountId: string;
   rewardId: string;
   points: number;
-  reward: Reward | null;
   createdAt: string;
 
-  constructor(data: Record<string, string | number | null | undefined | Record<string, string | number | undefined>>) {
+  constructor(data: Record<string, string | number | null | undefined>) {
     this.id = data.id as string;
-    this.accountId = data.accountId as string;
-    this.rewardId = data.rewardId as string;
+    this.accountId = data.account_id as string;
+    this.rewardId = data.reward_id as string;
     this.points = data.points as number;
-    this.reward = data.reward ? new Reward(data.reward as Record<string, string | number | undefined>) : null;
-    this.createdAt = data.createdAt as string;
+    this.createdAt = data.created_at as string;
   }
 }
 
@@ -43,8 +41,8 @@ class User {
   constructor(data: Record<string, string | number | undefined>) {
     this.id = data.id as string;
     this.email = data.email as string;
-    this.createdAt = data.createdAt as string;
-    this.updatedAt = data.updatedAt as string;
+    this.createdAt = data.created_at as string;
+    this.updatedAt = data.updated_at as string;
   }
 }
 

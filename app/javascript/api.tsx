@@ -69,6 +69,16 @@ export class API {
     return (await response.json()).map(account => new Account(account));
   }
 
+  static async getAccountDefault(): Promise<Account> {
+    const response = await fetch("/api/accounts/default");
+
+    if (!response.ok) {
+      await throwError(response, "Failed to fetch default account");
+    }
+
+    return new Account(await response.json());
+  }
+
   static async getAccount(id): Promise<Account> {
     const response = await fetch(`/api/accounts/${id}`);
 
@@ -80,7 +90,7 @@ export class API {
   }
 
   static async getAccountTransactions(id): Promise<AccountTransaction[]> {
-    const response = await fetch(`/api/account/${id}/account_transactions`);
+    const response = await fetch(`/api/accounts/${id}/account_transactions`);
 
     if (!response.ok) {
       await throwError(response, "Failed to fetch account transactions");

@@ -6,8 +6,8 @@ import { Account, Reward, User } from "./models";
 type AppState = {
   user: User | null;
   setUser: (user: User | null) => void;
-  accounts: Account[];
-  setAccounts: (accounts: Account[]) => void;
+  account: Account | null;
+  setAccount: (account: Account | null) => void;
   rewardsById: Record<string, Reward>;
   setRewardsById: (rewards: Record<string, Reward>) => void;
 };
@@ -18,11 +18,11 @@ const AppStateContext = createContext<AppState | undefined>(undefined);
 
 export function AppStateProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [account, setAccount] = useState<Account | null>(null);
   const [rewardsById, setRewardsById] = useState<Record<string, Reward>>({});
 
   return (
-    <AppStateContext.Provider value={{ user, accounts, rewardsById, setUser, setAccounts, setRewardsById }}>
+    <AppStateContext.Provider value={{ user, account, rewardsById, setUser, setAccount, setRewardsById }}>
       {children}
     </AppStateContext.Provider>
   );
@@ -38,45 +38,33 @@ export function useAppState() {
   return ctx;
 }
 
-export function getUser() {
-  const { user, setUser } = useAppState();
+// export function getUser() {
+//   const { user, setUser } = useAppState();
 
-  if (!user) {
-    API.getUser()
-      .then((user) => {
-        setUser(user);
-      });
-  }
+//   if (!user) {
+//     API.getUser()
+//       .then((user) => {
+//         setUser(user);
+//       });
+//   }
 
-  return user;
-}
+//   return user;
+// }
 
-export function getAccounts() {
-  const { accounts, setAccounts } = useAppState();
+// export function getAccount() {
+//   const { account, setAccount } = useAppState();
 
-  if (!accounts) {
-    API.getAccounts()
-      .then((accounts) => {
-        setAccounts(accounts);
-      });
-  }
+//   if (!account) {
+//     API.getAccountDefault()
+//       .then((account) => {
+//         setAccount(account);
+//       });
+//   }
 
-  return accounts;
-}
+//   return account;
+// }
 
-export function getRewards() {
-  const { rewardsById, setRewardsById } = useAppState();
+// export function getRewards() {
 
-  if (!rewardsById) {
-    API.getRewards()
-      .then((rewards) => {
-        setRewardsById(rewards.reduce((byId, reward) => {
-          byId[reward.id] = reward;
-
-          return byId;
-        }, {}));
-      });
-  }
-
-  return rewardsById;
-}
+//   return rewardsById;
+// }

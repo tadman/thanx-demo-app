@@ -2,7 +2,8 @@ class API::BaseController < ActionController::API
   include ActionController::Cookies
   include ActionController::RequestForgeryProtection
 
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token
 
   before_action :validate_session
 

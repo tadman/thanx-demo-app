@@ -20,6 +20,7 @@ end
 RSpec.configure do |config|
   # Supports mocking a user for running test queries
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :request
 
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!

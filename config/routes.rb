@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   namespace :api do
     resource :user, only: [ :show ]
     resources :accounts, only: [ :index, :show ] do |account|
+      get :default, on: :collection
+
       resources :account_transactions, only: [ :index ]
     end
     resources :rewards, only: [ :index, :show ] do

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { API } from "./api";
+import { useAppState } from "./AppState";
 
 import { Reward } from "./models";
 import Loading from "./Loading";
@@ -67,16 +68,36 @@ function RedeemOptions({ reward,redeemState, setRedeemState }) {
   return <div>Not available to redeem at this time.</div>;
 }
 
+function RedeemBadge({ reward, redeemed }) {
+  if (reward.redeemed || redeemed) {
+    return <span className="absolute bottom-2.5 right-2.5 p-1.5 rounded opacity-100 bg-orange-500 text-orange-50">
+      Redeemed
+    </span>;
+  }
+
+  return <span className="absolute bottom-2.5 right-2.5 bg-white opacity-70 p-1.5 rounded group-hover:opacity-100 group-hover:bg-orange-500 group-hover:text-orange-50">{reward.points} Points</span>;
+}
+
 export default function RewardView() {
+  const { account } = useAppState();
+
   const { id } = useParams();
   const [reward, setReward] = useState<Reward | null>(null);
   const [redeemState, setRedeemState] = useState<RedeemState>(RedeemState.Available);
 
   useEffect(() => {
     if (!id) return;
+
     API.getReward(id)
       .then((reward) => {
+        if (account && account.points < reward.points) {
+          setRedeemState(RedeemState.InsufficientPoints);
+        } else {
+          setRedeemState(RedeemState.Available);
+        }
+
         setReward(reward);
+
       });
   }, [id]);
 
@@ -93,9 +114,7 @@ export default function RewardView() {
     <div className="relative inline-block rounded overflow-hidden">
       <img src={reward.url} alt={reward.title} style={{ maxWidth: "900px", maxHeight: "900px" }} />
 
-      <span className="absolute bottom-2.5 right-2.5 p-1.5 rounded bg-orange-500 text-orange-50">
-        {reward.points.toLocaleString()} Points
-      </span>
+      <RedeemBadge reward={reward} redeemed={redeemState === RedeemState.Redeemed} />
     </div>
 
     <div className="mt-4">
