@@ -4,8 +4,11 @@ import { Link, useParams } from "react-router-dom";
 import { API } from "./api";
 import { useAppState } from "./AppState";
 
-import { Reward } from "./models";
 import Loading from "./Loading";
+
+import { Reward } from "./models";
+
+import RewardCardInline from "./RewardCardInline";
 
 enum RedeemState {
   Unavailable,
@@ -18,10 +21,15 @@ enum RedeemState {
   Rejected
 };
 
-function redeem(reward, setRedeemState) {
+function redeem(reward, setRedeemState, setAccount) {
   API.redeemReward(reward.id)
     .then((_transaction) => {
-      setRedeemState(RedeemState.Redeemed);
+      setRedeemState(RedeemState.Claimed);
+
+      // Refresh account to get updated balance
+      API.getAccountDefault().then((account) => {
+        setAccount(account);
+      });
     })
     .catch((error) => {
       // FUTURE: Provide a consistent code for matching errors instead of an arbitrary error description
@@ -33,9 +41,13 @@ function redeem(reward, setRedeemState) {
   });
 }
 
-function RedeemOptions({ reward,redeemState, setRedeemState }) {
+function RedeemOptions({ reward,redeemState, setRedeemState, setAccount }) {
   if (redeemState === RedeemState.Available) {
     return <div className="btn btn-redeem" onClick={() => setRedeemState(RedeemState.Confirming)}>Redeem</div>;
+  }
+
+  if (redeemState === RedeemState.Claimed) {
+    return <div className="bg-white rounded p-8 text-center justify-center">Reward has been redeemed.</div>;
   }
 
   if (redeemState === RedeemState.Confirming) {
@@ -43,7 +55,7 @@ function RedeemOptions({ reward,redeemState, setRedeemState }) {
       <p>Are you sure you want to redeem this reward for {reward.points.toLocaleString()} points?</p>
 
       <div className="flex gap-4">
-        <div className="btn btn-redeem" onClick={() => redeem(reward, setRedeemState)}>Confirm</div>
+        <div className="btn btn-redeem" onClick={() => redeem(reward, setRedeemState, setAccount)}>Confirm</div>
         <div className="btn btn-cancel" onClick={() => setRedeemState(RedeemState.Available)}>Cancel</div>
       </div>
     </div>;
@@ -62,8 +74,9 @@ function RedeemOptions({ reward,redeemState, setRedeemState }) {
   }
 
   if (redeemState === RedeemState.Redeemed) {
-    return <div className="bg-white rounded p-8 text-center justify-center">Reward claimed.</div>;
+    return <div className="bg-white rounded p-8 text-center justify-center">This reward has already been redeemed.</div>;
   }
+
 
   return <div>Not available to redeem at this time.</div>;
 }
@@ -79,8 +92,7 @@ function RedeemBadge({ reward, redeemed }) {
 }
 
 export default function RewardView() {
-  const { account } = useAppState();
-
+  const { account, setAccount } = useAppState();
   const { id } = useParams();
   const [reward, setReward] = useState<Reward | null>(null);
   const [redeemState, setRedeemState] = useState<RedeemState>(RedeemState.Available);
@@ -96,6 +108,10 @@ export default function RewardView() {
           setRedeemState(RedeemState.Available);
         }
 
+        if (reward.redeemed) {
+          setRedeemState(RedeemState.Redeemed);
+        }
+
         setReward(reward);
 
       });
@@ -105,8 +121,10 @@ export default function RewardView() {
     return <Loading />;
   }
 
-  return <div className="w-[740px]">
+  return <div className="w-[740px] flex flex-col space-y-4">
     <Link to="/" className="btn">&lt; Back</Link>
+
+    <RewardCardInline account={account} />
 
     <h1 className="mt-2 text-2xl font-bold text-orange-400">{reward.title}</h1>
     <p className="text-gray-500">{reward.description}</p>
@@ -118,7 +136,7 @@ export default function RewardView() {
     </div>
 
     <div className="mt-4">
-      <RedeemOptions reward={reward} redeemState={redeemState} setRedeemState={setRedeemState} />
+      <RedeemOptions reward={reward} redeemState={redeemState} setRedeemState={setRedeemState} setAccount={setAccount} />
     </div>
   </div>;
 }

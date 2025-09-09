@@ -32,9 +32,7 @@ export default function UserProfile() {
       <p>{user.email}</p>
     </div>
 
-    <div className="flex flex-wrap gap-4">
-      <RewardCardInline key={account.id} account={account} />
-    </div>
+    <RewardCardInline account={account} />
 
     <div>
       <RewardList rewards={rewards} points={account.points} />
