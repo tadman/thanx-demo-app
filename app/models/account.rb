@@ -20,6 +20,14 @@ class Account < ApplicationRecord
     ]
   end
 
+  def add_points(points)
+    if persisted?
+      account_transactions.create(points:)
+    else
+      account_transactions.build(points:)
+    end
+  end
+
   def add_points!(points)
     account_transactions.create!(points:)
   end
