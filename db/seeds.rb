@@ -13,9 +13,7 @@ Account.find_or_create_by!(
   user:,
   number: "2025-123456"
 ) do |account|
-  account.account_transactions.build(
-    points: 10_000
-  )
+  account.add_points!(10_000)
 end
 
 user = User.find_or_create_by!(
@@ -28,18 +26,14 @@ Account.find_or_create_by!(
   user:,
   number: "2025-654321"
 ) do |account|
-  account.account_transactions.build(
-    points: 10_000
-  )
+  account.add_points!(10_000)
 end
 
 Account.find_or_create_by!(
   user:,
   number: "2025-543210"
 ) do |account|
-  account.account_transactions.build(
-    points: 25_000
-  )
+  account.add_points!(25_000)
 end
 
 [

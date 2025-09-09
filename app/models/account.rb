@@ -20,6 +20,10 @@ class Account < ApplicationRecord
     ]
   end
 
+  def add_points!(points)
+    account_transactions.create!(points:)
+  end
+
   def points
     account_transactions.sum(:points)
   end
@@ -35,6 +39,7 @@ class Account < ApplicationRecord
   end
 
   def as_json(*_options)
+    # NOTE: Can avoid another load of user here if rendering this as part of a list
     {
       id:,
       number:,

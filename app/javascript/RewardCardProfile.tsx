@@ -29,7 +29,7 @@ export default function RewardCardProfile() {
       .then((transactions) => {
         setTransactions(transactions);
       });
-    }, [account]);
+  }, [account]);
 
   if (!account) {
     return <Loading />;
@@ -38,7 +38,7 @@ export default function RewardCardProfile() {
   return <div className="flex flex-col space-y-4">
     <Link to="/" className="btn">&lt; Back</Link>
 
-    <RewardCardInline account={account} />
+    <RewardCardInline />
 
     <div>
       <h2>Reward History</h2>

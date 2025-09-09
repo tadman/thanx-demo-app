@@ -109,7 +109,7 @@ export default function RewardView() {
 
         setReward(reward);
       });
-  }, [id]);
+  }, [id, account]);
 
   if (!reward) {
     return <Loading />;
@@ -118,7 +118,7 @@ export default function RewardView() {
   return <div className="w-[740px] flex flex-col space-y-4">
     <Link to="/" className="btn">&lt; Back</Link>
 
-    <RewardCardInline account={account} />
+    <RewardCardInline />
 
     <h1 className="mt-2 text-2xl font-bold text-orange-400">{reward.title}</h1>
     <p className="text-gray-500">{reward.description}</p>

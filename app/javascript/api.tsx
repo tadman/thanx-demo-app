@@ -7,7 +7,7 @@ function railsCSRFToken(): string {
     throw new Error("CSRF token not found, cannot proceed. Check that the csrf_meta_tags call is present in the Rails layout.");
   }
 
-  return meta?.content!;
+  return meta?.content;
 }
 
 async function railsPost(url): Promise<Response> {

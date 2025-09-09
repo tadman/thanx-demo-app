@@ -1,25 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { useAppState } from "./AppState";
 
 import RewardCardInline from "./RewardCardInline";
 import RewardList from "./RewardList";
 
-import { API } from "./api";
-import { Reward } from "./models";
 import Loading from "./Loading";
 
 export default function UserProfile() {
   const { user } = useAppState();
-  const { account } = useAppState();
-  const [rewards, setRewards] = useState<Reward[number]>([]);
-
-  useEffect(() => {
-    API.getRewards()
-      .then((rewards) => {
-        setRewards(rewards);
-      });
-  }, []);
 
   if (!user) {
     return <Loading />;
@@ -32,10 +21,8 @@ export default function UserProfile() {
       <p>{user.email}</p>
     </div>
 
-    <RewardCardInline account={account} />
+    <RewardCardInline />
 
-    <div>
-      <RewardList rewards={rewards} points={account?.points} />
-    </div>
+    <RewardList />
   </div>;
 }

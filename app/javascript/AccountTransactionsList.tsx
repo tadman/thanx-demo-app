@@ -18,7 +18,7 @@ export default function AccountTransactionsList({ transactions }: { transactions
           return byId;
         }, {}));
       });
-  }, []);
+  }, [setRewardsById]);
 
   return <div className="container">
     <table className="table-auto w-full border-separate border-spacing-0">

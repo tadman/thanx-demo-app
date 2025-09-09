@@ -1,7 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function RewardCardInline({ account }) {
+import { useAppState } from "./AppState";
+
+export default function RewardCardInline() {
+  const { account } = useAppState();
+
   if (!account) {
     return <div className="reward-card h-36 w-96">
     </div>;

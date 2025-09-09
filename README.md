@@ -27,6 +27,7 @@ yarn install
 
 ```shell
 bin/dev
+bin/rails s
 ```
 
 ## Development
@@ -35,6 +36,12 @@ To spin up a local database:
 
 ```shell
 rails db:migrate db:seed db:test:prepare
+```
+
+To add points balance to the default account:
+
+```ruby
+Account.first.add_points!(2500)
 ```
 
 ### Testing
