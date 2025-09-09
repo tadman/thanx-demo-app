@@ -49,14 +49,29 @@ export class API {
     return new Reward(await response.json());
   }
 
-  static async redeemReward(id): Promise<AccountTransaction> {
+  static async getRewards(): Promise<Reward[]> {
+    const response = await fetch("/api/rewards");
+
+    if (!response.ok) {
+      await throwError(response, "Failed to fetch rewards");
+    }
+
+    return (await response.json()).map(reward => new Reward(reward));
+  }
+
+  static async redeemReward(id): Promise<{ account: Account, transaction: AccountTransaction }> {
     const response = await railsPost(`/api/rewards/${id}/redeem`);
 
     if (!response.ok) {
       await throwError(response, "Failed to redeem reward");
     }
 
-    return new AccountTransaction(await response.json());
+    const data = await response.json();
+
+    return {
+      account: new Account(data.account),
+      transaction: new AccountTransaction(data.transaction),
+    }
   }
 
   static async getAccounts(): Promise<Account[]> {
@@ -97,15 +112,5 @@ export class API {
     }
 
     return (await response.json()).map(transaction => new AccountTransaction(transaction));
-  }
-
-  static async getRewards(): Promise<Reward[]> {
-    const response = await fetch("/api/rewards");
-
-    if (!response.ok) {
-      await throwError(response, "Failed to fetch rewards");
-    }
-
-    return (await response.json()).map(reward => new Reward(reward));
   }
 }

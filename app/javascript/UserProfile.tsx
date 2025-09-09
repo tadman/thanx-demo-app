@@ -35,7 +35,7 @@ export default function UserProfile() {
     <RewardCardInline account={account} />
 
     <div>
-      <RewardList rewards={rewards} points={account.points} />
+      <RewardList rewards={rewards} points={account?.points} />
     </div>
   </div>;
 }

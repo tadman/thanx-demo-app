@@ -11,7 +11,6 @@ import { Reward } from "./models";
 import RewardCardInline from "./RewardCardInline";
 
 enum RedeemState {
-  Unavailable,
   Available,
   Claimed,
   Confirming,
@@ -23,13 +22,10 @@ enum RedeemState {
 
 function redeem(reward, setRedeemState, setAccount) {
   API.redeemReward(reward.id)
-    .then((_transaction) => {
+    .then(({ account }) => {
       setRedeemState(RedeemState.Claimed);
 
-      // Refresh account to get updated balance
-      API.getAccountDefault().then((account) => {
-        setAccount(account);
-      });
+      setAccount(account);
     })
     .catch((error) => {
       // FUTURE: Provide a consistent code for matching errors instead of an arbitrary error description
@@ -65,6 +61,10 @@ function RedeemOptions({ reward,redeemState, setRedeemState, setAccount }) {
     return <div className="btn btn-redeem">Confirming...</div>;
   }
 
+  if (redeemState === RedeemState.Redeemed) {
+    return <div className="bg-white rounded p-8 text-center justify-center">This reward has already been redeemed.</div>;
+  }
+
   if (redeemState === RedeemState.InsufficientPoints) {
     return <div className="disclosure disclosure-error">Account does not have sufficient points to redeem this reward.</div>;
   }
@@ -72,11 +72,6 @@ function RedeemOptions({ reward,redeemState, setRedeemState, setAccount }) {
   if (redeemState === RedeemState.Rejected) {
     return <div>Redeem operation failed</div>;
   }
-
-  if (redeemState === RedeemState.Redeemed) {
-    return <div className="bg-white rounded p-8 text-center justify-center">This reward has already been redeemed.</div>;
-  }
-
 
   return <div>Not available to redeem at this time.</div>;
 }
@@ -113,7 +108,6 @@ export default function RewardView() {
         }
 
         setReward(reward);
-
       });
   }, [id]);
 

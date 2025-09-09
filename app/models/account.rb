@@ -1,6 +1,8 @@
 class Account < ApplicationRecord
   belongs_to :user
-  has_many :account_transactions
+
+  has_many :account_transactions,
+    dependent: :destroy
 
   has_many :redeemed_rewards,
     class_name: "Reward",

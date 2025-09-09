@@ -10,7 +10,8 @@ class User < ApplicationRecord
     :validatable
   )
 
-  has_many :accounts
+  has_many :accounts,
+    dependent: :destroy
 
   def default_account
     accounts.first
